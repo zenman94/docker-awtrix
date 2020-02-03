@@ -1,13 +1,16 @@
-FROM openjdk:8u242-slim
+FROM openjdk:8-slim
 
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    wget \
+ && rm -rf /var/lib/apt/lists/*
 # Download Awtrix Server jar
-RUN wget -O /opt/awtrix.jar https://blueforcer.de/beta/awtrix.jar
+RUN wget -q -O /app/awtrix.jar https://blueforcer.de/awtrix/beta/awtrix.jar
 
 
 # Web Ui Server Port
 EXPOSE 7000
 
-WORKDIR /opt
-
 # Start Server
-CMD ["java","-jar","/opt/awtrix.jar"]
+CMD ["java","-jar","/app/awtrix.jar"]
